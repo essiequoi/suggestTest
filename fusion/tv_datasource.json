@@ -1,1 +1,88 @@
-{"code":"unauthorized"}
+{
+  "id" : "tv",
+  "created" : "2016-12-12T15:34:04.056Z",
+  "modified" : "2016-12-12T15:34:04.056Z",
+  "connector" : "lucid.anda",
+  "type" : "file",
+  "pipeline" : "CSV",
+  "properties" : {
+    "refreshOlderThan" : -1,
+    "emitThreads" : 5,
+    "diagnosticMode" : false,
+    "refreshErrors" : false,
+    "dedupeSaveSignature" : false,
+    "crawlDBType" : "in-memory",
+    "delete" : true,
+    "initial_mapping" : {
+      "mappings" : [ {
+        "source" : "charSet",
+        "target" : "charSet_s",
+        "operation" : "move"
+      }, {
+        "source" : "fetchedDate",
+        "target" : "fetchedDate_dt",
+        "operation" : "move"
+      }, {
+        "source" : "lastModified",
+        "target" : "lastModified_dt",
+        "operation" : "move"
+      }, {
+        "source" : "signature",
+        "target" : "dedupeSignature_s",
+        "operation" : "move"
+      }, {
+        "source" : "contentSignature",
+        "target" : "signature_s",
+        "operation" : "move"
+      }, {
+        "source" : "length",
+        "target" : "length_l",
+        "operation" : "move"
+      }, {
+        "source" : "mimeType",
+        "target" : "mimeType_s",
+        "operation" : "move"
+      }, {
+        "source" : "parent",
+        "target" : "parent_s",
+        "operation" : "move"
+      }, {
+        "source" : "owner",
+        "target" : "owner_s",
+        "operation" : "move"
+      }, {
+        "source" : "group",
+        "target" : "group_s",
+        "operation" : "move"
+      } ],
+      "reservedFieldsMappingAllowed" : false,
+      "skip" : false,
+      "id" : "FromMap",
+      "label" : "field-mapping",
+      "type" : "field-mapping"
+    },
+    "fetchDelayMS" : 0,
+    "splitArchives" : true,
+    "refreshAll" : true,
+    "failFastOnStartLinkFailure" : true,
+    "startLinks" : [ "/Users/esther/Desktop/indexer/tv.csv" ],
+    "f.minSizeBytes" : 0,
+    "maxItems" : -1,
+    "chunkSize" : 50,
+    "trackEmbeddedIDs" : true,
+    "dedupe" : false,
+    "collection" : "suggestTest",
+    "deleteErrorsAfter" : -1,
+    "retryEmit" : true,
+    "forceRefresh" : false,
+    "depth" : -1,
+    "refreshStartLinks" : false,
+    "f.maxSizeBytes" : 4194304,
+    "f.addFileMetadata" : true,
+    "aliasExpiration" : 1,
+    "indexCrawlDBToSolr" : false,
+    "fetchThreads" : 5,
+    "restrictToTree" : true,
+    "retainOutlinks" : true
+  }
+}

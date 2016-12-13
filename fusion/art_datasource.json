@@ -1,1 +1,88 @@
-{"code":"unauthorized"}
+{
+  "id" : "art",
+  "created" : "2016-12-12T15:33:38.525Z",
+  "modified" : "2016-12-12T15:33:38.525Z",
+  "connector" : "lucid.anda",
+  "type" : "file",
+  "pipeline" : "CSV",
+  "properties" : {
+    "refreshOlderThan" : -1,
+    "emitThreads" : 5,
+    "diagnosticMode" : false,
+    "refreshErrors" : false,
+    "dedupeSaveSignature" : false,
+    "crawlDBType" : "in-memory",
+    "delete" : true,
+    "initial_mapping" : {
+      "mappings" : [ {
+        "source" : "charSet",
+        "target" : "charSet_s",
+        "operation" : "move"
+      }, {
+        "source" : "fetchedDate",
+        "target" : "fetchedDate_dt",
+        "operation" : "move"
+      }, {
+        "source" : "lastModified",
+        "target" : "lastModified_dt",
+        "operation" : "move"
+      }, {
+        "source" : "signature",
+        "target" : "dedupeSignature_s",
+        "operation" : "move"
+      }, {
+        "source" : "contentSignature",
+        "target" : "signature_s",
+        "operation" : "move"
+      }, {
+        "source" : "length",
+        "target" : "length_l",
+        "operation" : "move"
+      }, {
+        "source" : "mimeType",
+        "target" : "mimeType_s",
+        "operation" : "move"
+      }, {
+        "source" : "parent",
+        "target" : "parent_s",
+        "operation" : "move"
+      }, {
+        "source" : "owner",
+        "target" : "owner_s",
+        "operation" : "move"
+      }, {
+        "source" : "group",
+        "target" : "group_s",
+        "operation" : "move"
+      } ],
+      "reservedFieldsMappingAllowed" : false,
+      "skip" : false,
+      "id" : "Anda",
+      "label" : "field-mapping",
+      "type" : "field-mapping"
+    },
+    "fetchDelayMS" : 0,
+    "splitArchives" : true,
+    "refreshAll" : true,
+    "startLinks" : [ "/Users/esther/Desktop/indexer/art.csv" ],
+    "failFastOnStartLinkFailure" : true,
+    "f.minSizeBytes" : 0,
+    "maxItems" : -1,
+    "chunkSize" : 50,
+    "dedupe" : false,
+    "trackEmbeddedIDs" : true,
+    "collection" : "suggestTest",
+    "deleteErrorsAfter" : -1,
+    "retryEmit" : true,
+    "forceRefresh" : false,
+    "depth" : -1,
+    "f.maxSizeBytes" : 4194304,
+    "refreshStartLinks" : false,
+    "f.addFileMetadata" : true,
+    "aliasExpiration" : 1,
+    "fetchThreads" : 5,
+    "indexCrawlDBToSolr" : false,
+    "restrictToTree" : true,
+    "retainOutlinks" : true
+  }
+}
