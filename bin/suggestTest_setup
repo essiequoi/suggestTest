@@ -1,1 +1,47 @@
-# suggestTest
+# suggestTest using Fusion 2.4.3
+#!/usr/bin/env bash
+
+#export FUSION_HOME=$HOME/Lucid/fusion/fusion2.4.3/
+#export FUSION_API_BASE=http://localhost:8764/api/apollo
+#export FUSION_API_CREDENTIALS=admin:password123
+
+if [ -z "$FUSION_HOME" ]; then
+  echo "FUSION_HOME must be set" >&2
+  exit 1
+fi
+
+if [ -z "$FUSION_API_BASE" ]; then
+  echo "FUSION_API_BASE must be set, e.g. http://localhost:8764/api/apollo" >&2
+  exit 1
+fi
+
+if [ -z "$FUSION_API_CREDENTIALS" ]; then
+  echo "FUSION_API_CREDENTIALS must be set, e.g. admin:password123" >&2
+  exit 1
+fi
+
+
+# suggestTest: create collection
+curl -u $FUSION_API_CREDENTIALS -X DELETE "http://localhost:8764/api/apollo/collections/suggestTest?solr=true&purge=true"
+curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
+     -d '{"solrParams":{"replicationFactor":1,"numShards":1}}' \
+     ${FUSION_API_BASE}/collections/suggestTest
+
+
+
+# suggestTest: set up index and query pipelines
+curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/query-pipelines/$
+curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @temp/${COLLECTION}-rules-query-pipeline.json ${FUSION_API_BASE}/query-pipelines
+# GET PIPELINE: curl -u $FUSION_API_CREDENTIALS -X GET ${FUSION_API_BASE}/query-pipelines/${COLLECTION}-rules > ${COLLECTION}-rules-query-pipeline.json
+
+# ${COLLECTION}: set up "rules" query profile
+curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' -d "\"${COLLECTION}-rules\"" ${FUSION_API_BASE}/collections/${COLLECTION}/query-profiles/rules
+
+# Install Rules Editor
+mkdir -p temp/rules-editor
+unzip fusion/rules-editor-2.0.zip -d temp/rules-editor
+sed "s/<COLLECTION>/${COLLECTION}/g" fusion/FUSION_CONFIG.js.template \
+    > temp/rules-editor/assets/js/FUSION_CONFIG.js
+diff fusion/FUSION_CONFIG.js.template temp/rules-editor/assets/js/FUSION_CONFIG.js
+rm -Rf $FUSION_HOME/apps/jetty/ui/webapps/${COLLECTION}-rules-editor
+cp -R temp/rules-editor/ $FUSION_HOME/apps/jetty/ui/webapps/${COLLECTION}-rules-editor
