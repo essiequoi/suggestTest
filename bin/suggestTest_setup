@@ -1,4 +1,3 @@
-# suggestTest using Fusion 2.4.3
 #!/usr/bin/env bash
 
 #export FUSION_HOME=$HOME/Lucid/fusion/fusion2.4.3/
@@ -29,19 +28,8 @@ curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
 
 
 
-# suggestTest: set up index and query pipelines
-curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/query-pipelines/$
-curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @temp/${COLLECTION}-rules-query-pipeline.json ${FUSION_API_BASE}/query-pipelines
-# GET PIPELINE: curl -u $FUSION_API_CREDENTIALS -X GET ${FUSION_API_BASE}/query-pipelines/${COLLECTION}-rules > ${COLLECTION}-rules-query-pipeline.json
+# suggestTest: set up query pipeline
+curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/query-pipelines/suggestTest-default
+curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/suggestTest_querypipeline.json ${FUSION_API_BASE}/query-pipelines
+# GET PIPELINE: curl -u $FUSION_API_CREDENTIALS -X GET ${FUSION_API_BASE}/query-pipelines/suggestTest-default > suggestTest_querypipeline.json
 
-# ${COLLECTION}: set up "rules" query profile
-curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' -d "\"${COLLECTION}-rules\"" ${FUSION_API_BASE}/collections/${COLLECTION}/query-profiles/rules
-
-# Install Rules Editor
-mkdir -p temp/rules-editor
-unzip fusion/rules-editor-2.0.zip -d temp/rules-editor
-sed "s/<COLLECTION>/${COLLECTION}/g" fusion/FUSION_CONFIG.js.template \
-    > temp/rules-editor/assets/js/FUSION_CONFIG.js
-diff fusion/FUSION_CONFIG.js.template temp/rules-editor/assets/js/FUSION_CONFIG.js
-rm -Rf $FUSION_HOME/apps/jetty/ui/webapps/${COLLECTION}-rules-editor
-cp -R temp/rules-editor/ $FUSION_HOME/apps/jetty/ui/webapps/${COLLECTION}-rules-editor
