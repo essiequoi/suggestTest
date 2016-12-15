@@ -58,6 +58,8 @@ curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @
 curl -u $FUSION_API_CREDENTIALS -X POST ${FUSION_API_BASE}/connectors/jobs/art
 curl -u $FUSION_API_CREDENTIALS -X POST ${FUSION_API_BASE}/connectors/jobs/tv
 
+#pause 10 seconds before building
+sleep 10
 
 # suggestTest: set up query pipeline
 curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/query-pipelines/suggestTest-default
