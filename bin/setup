@@ -16,6 +16,11 @@ if [ -z "$FUSION_API_BASE" ]; then
   exit 1
 fi
 
+if [ -z "$SOLR_API_BASE" ]; then
+  echo "SOLR_API_BASE must be set, e.g. http://localhost:8983/solr" >&2
+  exit 1
+fi
+
 if [ -z "$FUSION_API_CREDENTIALS" ]; then
   echo "FUSION_API_CREDENTIALS must be set, e.g. admin:password123" >&2
   exit 1
