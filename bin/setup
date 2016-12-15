@@ -34,7 +34,7 @@ curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
 
 # send modified solrconfig.xml to zk for Fusion 2.x
 
-${FUSION_HOME}/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -cmd putfile -zkhost $ZK_HOST /configs/suggestTest fusion/suggestTest_solrconfig.xml
+${FUSION_HOME}/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -cmd putfile -zkhost $ZK_HOST /configs/suggestTest/solrconfig.xml fusion/suggestTest_solrconfig.xml
 
 #create the art and tv datasources
 
