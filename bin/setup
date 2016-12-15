@@ -2,6 +2,7 @@
 set -x
 #export FUSION_HOME=$HOME/Lucid/fusion/fusion2.4.3/
 #export FUSION_API_BASE=http://localhost:8764/api/apollo
+#export SOLR_API_BASE=http://localhost:8983/solr
 #export FUSION_API_CREDENTIALS=admin:password123
 #export ZK_HOST=localhost:9983
 
@@ -35,6 +36,10 @@ curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
 # send modified solrconfig.xml to zk for Fusion 2.x
 
 ${FUSION_HOME}/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -cmd putfile -zkhost $ZK_HOST /configs/suggestTest/solrconfig.xml fusion/suggestTest_solrconfig.xml
+
+# reload the core
+
+curl ${SOLR_API_BASE}/admin/cores?action=RELOAD&core=suggestTest_shard1_replica1
 
 #create the art and tv datasources
 
