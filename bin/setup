@@ -65,7 +65,7 @@ curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @
 # GET PIPELINE: curl -u $FUSION_API_CREDENTIALS -X GET ${FUSION_API_BASE}/query-pipelines/suggestTest-default > suggestTest_querypipeline.json
 
 # build the suggester
-curl -u $FUSION_API_CREDENTIALS ${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.build=true
+curl -u $FUSION_API_CREDENTIALS "${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.build=true"
 
 # query the collection using any of the following queries
 
