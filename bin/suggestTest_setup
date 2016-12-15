@@ -45,9 +45,23 @@ curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @
 
 #run the datasources
 
+curl -u $FUSION_API_CREDENTIALS -X POST ${FUSION_API_BASE}/connectors/jobs/art
+curl -u $FUSION_API_CREDENTIALS -X POST ${FUSION_API_BASE}/connectors/jobs/tv
+
 
 # suggestTest: set up query pipeline
 curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/query-pipelines/suggestTest-default
 curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/suggestTest_querypipeline.json ${FUSION_API_BASE}/query-pipelines
 # GET PIPELINE: curl -u $FUSION_API_CREDENTIALS -X GET ${FUSION_API_BASE}/query-pipelines/suggestTest-default > suggestTest_querypipeline.json
 
+# build the suggester
+curl -u $FUSION_API_CREDENTIALS ${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.build=true
+
+# query the collection using any of the following queries
+
+curl -u $FUSION_API_CREDENTIALS ${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.q=ba&suggest.cfq=art
+# curl -u $FUSION_API_CREDENTIALS ${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.q=ba&suggest.cfq=tv
+# curl -u $FUSION_API_CREDENTIALS ${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.q=be&suggest.cfq=art
+# curl -u $FUSION_API_CREDENTIALS ${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.q=be&suggest.cfq=tv
+# curl -u $FUSION_API_CREDENTIALS ${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.q=ch&suggest.cfq=art
+# curl -u $FUSION_API_CREDENTIALS ${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.q=ch&suggest.cfq=tv
