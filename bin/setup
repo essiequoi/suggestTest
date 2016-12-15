@@ -44,7 +44,7 @@ ${FUSION_HOME}/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -cmd putfile
 
 # reload the collection
 
-curl '${SOLR_API_BASE}/admin/collections?action=RELOAD&name=suggestTest'
+curl "${SOLR_API_BASE}/admin/collections?action=RELOAD&name=suggestTest"
 
 #create the art and tv datasources
 
