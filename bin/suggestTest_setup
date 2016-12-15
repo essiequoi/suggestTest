@@ -3,6 +3,7 @@
 #export FUSION_HOME=$HOME/Lucid/fusion/fusion2.4.3/
 #export FUSION_API_BASE=http://localhost:8764/api/apollo
 #export FUSION_API_CREDENTIALS=admin:password123
+#export ZK_HOST=localhost:9983
 
 if [ -z "$FUSION_HOME" ]; then
   echo "FUSION_HOME must be set" >&2
@@ -19,6 +20,11 @@ if [ -z "$FUSION_API_CREDENTIALS" ]; then
   exit 1
 fi
 
+if [ -z "$ZK_HOST" ]; then
+  echo "ZK_HOST must be set, e.g. localhost:9983" >&2
+  exit 1
+fi
+
 
 # suggestTest: create collection
 curl -u $FUSION_API_CREDENTIALS -X DELETE "http://localhost:8764/api/apollo/collections/suggestTest?solr=true&purge=true"
@@ -26,6 +32,18 @@ curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
      -d '{"solrParams":{"replicationFactor":1,"numShards":1}}' \
      ${FUSION_API_BASE}/collections/suggestTest
 
+# send modified solrconfig.xml to zk for Fusion 2.x
+
+$FUSION_HOME/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -cmd putfile -zkhost $ZK_HOST /configs/suggestTest fusion/suggestTest_solrconfig.xml
+
+#create the art and tv datasources
+
+curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/datasources/art
+curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/datasources/tv
+curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/art_datasource.json ${FUSION_API_BASE}/datasources
+curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/tv_datasource.json ${FUSION_API_BASE}/datasources
+
+#run the datasources
 
 
 # suggestTest: set up query pipeline
