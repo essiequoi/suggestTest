@@ -64,7 +64,7 @@
     "fetchDelayMS" : 0,
     "splitArchives" : true,
     "refreshAll" : true,
-    "startLinks" : [ "/Users/esther/Desktop/indexer/art.csv" ],
+    "startLinks" : [ "/Users/esther/Lucid/suggestTest/src/art.csv" ],
     "failFastOnStartLinkFailure" : true,
     "f.minSizeBytes" : 0,
     "maxItems" : -1,
