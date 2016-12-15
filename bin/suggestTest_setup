@@ -38,10 +38,10 @@ $FUSION_HOME/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -cmd putfile -
 
 #create the art and tv datasources
 
-curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/datasources/art
-curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/datasources/tv
-curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/art_datasource.json ${FUSION_API_BASE}/datasources
-curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/tv_datasource.json ${FUSION_API_BASE}/datasources
+curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/connectors/datasources/art
+curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/connectors/datasources/tv
+curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/art_datasource.json ${FUSION_API_BASE}/connectors/datasources
+curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/tv_datasource.json ${FUSION_API_BASE}/connectors/datasources
 
 #run the datasources
 
