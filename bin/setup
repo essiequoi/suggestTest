@@ -42,9 +42,9 @@ curl -u $FUSION_API_CREDENTIALS -X PUT -H 'Content-type: application/json' \
 
 ${FUSION_HOME}/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -cmd putfile -zkhost $ZK_HOST /configs/suggestTest/solrconfig.xml fusion/suggestTest_solrconfig.xml
 
-# reload the core
+# reload the collection
 
-curl ${SOLR_API_BASE}/admin/cores?action=RELOAD&core=suggestTest_shard1_replica1
+curl ${SOLR_API_BASE}/admin/collections?action=RELOAD&name=suggestTest
 
 #create the art and tv datasources
 
