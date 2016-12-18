@@ -5,6 +5,10 @@ set -x
 #export SOLR_API_BASE=http://localhost:8983/solr
 #export FUSION_API_CREDENTIALS=admin:password123
 #export ZK_HOST=localhost:9983
+#export SUGGEST_TEST_HOME=`pwd`
+
+
+
 
 if [ -z "$FUSION_HOME" ]; then
   echo "FUSION_HOME must be set" >&2
@@ -46,28 +50,38 @@ ${FUSION_HOME}/apps/solr-dist/server/scripts/cloud-scripts/zkcli.sh -cmd putfile
 
 curl "${SOLR_API_BASE}/admin/collections?action=RELOAD&name=suggestTest"
 
+#replace datasource startlinks with user path to ./src
+
+mkdir -p temp
+sed "s|<SUGGEST_TEST_HOME>|${SUGGEST_TEST_HOME}|g" fusion/art_datasource.json.template > temp/art_datasource.json
+sed "s|<SUGGEST_TEST_HOME>|${SUGGEST_TEST_HOME}|g" fusion/tv_datasource.json.template > temp/tv_datasource.json
+
 #create the art and tv datasources
 
 curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/connectors/datasources/art
 curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/connectors/datasources/tv
-curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/art_datasource.json ${FUSION_API_BASE}/connectors/datasources
-curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/tv_datasource.json ${FUSION_API_BASE}/connectors/datasources
+curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @temp/art_datasource.json ${FUSION_API_BASE}/connectors/datasources
+curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @temp/tv_datasource.json ${FUSION_API_BASE}/connectors/datasources
 
 #run the datasources
 
 curl -u $FUSION_API_CREDENTIALS -X POST ${FUSION_API_BASE}/connectors/jobs/art
 curl -u $FUSION_API_CREDENTIALS -X POST ${FUSION_API_BASE}/connectors/jobs/tv
 
-#pause 10 seconds before building
-sleep 10
+# give the indexing jobs time to run
+ sleep 10
 
 # suggestTest: set up query pipeline
 curl -u $FUSION_API_CREDENTIALS -X DELETE ${FUSION_API_BASE}/query-pipelines/suggestTest-default
 curl -u $FUSION_API_CREDENTIALS -X POST -H 'Content-type: application/json' -d @fusion/suggestTest_querypipeline.json ${FUSION_API_BASE}/query-pipelines
 # GET PIPELINE: curl -u $FUSION_API_CREDENTIALS -X GET ${FUSION_API_BASE}/query-pipelines/suggestTest-default > suggestTest_querypipeline.json
 
+sleep 5
+
 # build the suggester
 curl -u $FUSION_API_CREDENTIALS "${FUSION_API_BASE}/query-pipelines/suggestTest-default/collections/suggestTest/suggest?suggest.build=true"
+
+sleep 5
 
 # query the collection using any of the following queries
 
