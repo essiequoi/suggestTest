@@ -5,7 +5,7 @@ set -x
 #export SOLR_API_BASE=http://localhost:8983/solr
 #export FUSION_API_CREDENTIALS=admin:password123
 #export ZK_HOST=localhost:9983
-#export SUGGEST_TEST_HOME=`pwd`
+export SUGGEST_TEST_HOME=`pwd`
 
 
 
