@@ -65,7 +65,7 @@
     "splitArchives" : true,
     "refreshAll" : true,
     "failFastOnStartLinkFailure" : true,
-    "startLinks" : [ "/Users/esther/Lucid/suggestTest/src/tv.csv" ],
+    "startLinks" : [ "<SUGGEST_TEST_HOME>/src/tv.csv" ],
     "f.minSizeBytes" : 0,
     "maxItems" : -1,
     "chunkSize" : 50,
