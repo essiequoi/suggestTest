@@ -64,7 +64,7 @@
     "fetchDelayMS" : 0,
     "splitArchives" : true,
     "refreshAll" : true,
-    "startLinks" : [ "/Users/esther/Lucid/suggestTest/src/art.csv" ],
+    "startLinks" : [ "<SUGGEST_TEST_HOME>/src/art.csv" ],
     "failFastOnStartLinkFailure" : true,
     "f.minSizeBytes" : 0,
     "maxItems" : -1,
