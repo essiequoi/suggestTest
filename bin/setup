@@ -16,13 +16,14 @@ if [ -z "$FUSION_HOME" ]; then
 fi
 
 if [ -z "$FUSION_API_BASE" ]; then
-  echo "FUSION_API_BASE must be set, e.g. http://localhost:8764/api/apollo" >&2
-  exit 1
+  #echo "FUSION_API_BASE must be set, e.g. http://localhost:8764/api/apollo" >&2
+  export FUSION_API_BASE=http://localhost:8764/api/apollo
 fi
 
 if [ -z "$SOLR_API_BASE" ]; then
-  echo "SOLR_API_BASE must be set, e.g. http://localhost:8983/solr" >&2
-  exit 1
+  #echo "SOLR_API_BASE must be set, e.g. http://localhost:8983/solr" >&2
+  #exit 1
+  export SOLR_API_BASE=http://localhost:8983/solr
 fi
 
 if [ -z "$FUSION_API_CREDENTIALS" ]; then
@@ -31,8 +32,9 @@ if [ -z "$FUSION_API_CREDENTIALS" ]; then
 fi
 
 if [ -z "$ZK_HOST" ]; then
-  echo "ZK_HOST must be set, e.g. localhost:9983" >&2
-  exit 1
+  #echo "ZK_HOST must be set, e.g. localhost:9983" >&2
+  #exit 1
+  export ZK_HOST=localhost:9983
 fi
 
 
