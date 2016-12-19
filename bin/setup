@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -x
+#set -x command used to echo commands before they're run
+
 #export FUSION_HOME=$HOME/Lucid/fusion/fusion2.4.3/
 #export FUSION_API_BASE=http://localhost:8764/api/apollo
 #export SOLR_API_BASE=http://localhost:8983/solr
